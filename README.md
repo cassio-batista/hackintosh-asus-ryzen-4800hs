@@ -10,6 +10,8 @@
 - **Versão testada e recomendada**: macOS Sonoma 14.7.
 - O SMBIOS utilizado é `MacBookPro16,3`.
 - **Gere seus próprios seriais SMBIOS** com o GenSMBIOS antes de usar. Os seriais neste repositório são placeholders.
+- Neste hardware, a **VRAM da iGPU foi ajustada manualmente para 2GB (2048MB)** via UMAF/Smokeless-UMAF para estabilidade gráfica.
+- O fluxo validado inclui **pré-configurar o Wi-Fi no pendrive de instalação** (itlwm) antes do primeiro boot do instalador.
 
 ---
 
@@ -40,6 +42,7 @@
 | **Bateria** | ✅ Funciona | SMCBatteryManager + ECEnabler |
 | **Teclado** | ✅ Funciona | VoodooPS2Controller |
 | **Wi-Fi** | ✅ Funciona | `itlwm.kext` + HeliPort.app |
+| **Wi-Fi no Instalador** | ✅ Funciona | Com pre-configuração do itlwm no pendrive |
 | **Bluetooth** | ✅ Funciona | IntelBluetoothFirmware |
 | **USB** | ✅ Funciona | GenericUSBXHCI |
 | **NVMe/SSD** | ✅ Funciona | NVMeFix |
@@ -281,6 +284,16 @@ boot_args = ' '.join([a for a in boot_args.split() if a == '-vi2c-force-polling'
 
 ---
 
+### Problema 6: VRAM da iGPU em valor baixo (instabilidade/limitação gráfica)
+
+**Sintoma**: Em configuração padrão de BIOS, a iGPU pode ficar com memória pré-alocada insuficiente, afetando aceleração gráfica e estabilidade em cargas maiores.
+
+**Solução aplicada nesta máquina**: Ajuste manual de VRAM para **2GB (2048MB)** com **Smokeless-UMAF**.
+
+> **Lição**: Para Ryzen Renoir com NootedRed, manter VRAM em 2GB melhora consistência visual e reduz chance de glitches em uso prolongado.
+
+---
+
 ## 📝 Guia Passo a Passo Completo
 
 ### Pré-requisitos
@@ -289,6 +302,15 @@ boot_args = ' '.join([a for a in boot_args.split() if a == '-vi2c-force-polling'
 - Conexão com internet (cabo Ethernet, tethering USB)
 - Windows instalado para preparação
 - Python 3.x instalado
+
+### Etapa 0: BIOS/UMAF (crítico antes da instalação)
+
+1. Entre na BIOS e desabilite `Secure Boot`.
+2. Acesse o menu avançado via **Smokeless-UMAF**.
+3. Ajuste a memória da iGPU (UMA Frame Buffer) para **2GB / 2048MB**.
+4. Salve alterações e reinicie.
+
+> Sem esse ajuste, este projeto não reproduz o mesmo nível de estabilidade observado durante as sessões.
 
 ### Etapa 1: Baixar macOS Recovery
 
@@ -302,6 +324,17 @@ python macrecovery.py -b Mac-226CB3C6A851A671 -m 00000000000000000 download
 1. Formate o pendrive como **FAT32** (usando Rufus ou Disk Management)
 2. Copie a pasta `com.apple.recovery.boot/` (com BaseSystem.dmg) para a raiz
 3. Copie a pasta `EFI/` de `efi_macos/` para a raiz do pendrive
+
+#### Etapa 2.1: Pré-configurar Wi-Fi no pendrive (recomendado)
+
+1. Garanta no `config.plist` da EFI do pendrive:
+  - `itlwm.kext` = `Enabled: True`
+  - `AirportItlwm.kext` = `Enabled: False`
+2. Se for usar rede oculta ou já deixar conexão pronta, edite `injetar-wifi-oculto.py` com `SEU_SSID_AQUI` e `SUA_SENHA_AQUI`.
+3. Execute o script no Windows para injetar credenciais no `itlwm.kext` que está no pendrive.
+4. Faça boot no instalador já com a EFI preparada para Wi-Fi Intel.
+
+> Observação: o gerenciamento de rede no macOS instalado continua sendo via HeliPort (`itlwm`), não via AirportItlwm no Sonoma 14.4+.
 
 ### Etapa 3: Gerar SMBIOS
 
@@ -322,7 +355,7 @@ Use GenSMBIOS (https://github.com/corpnewt/GenSMBIOS):
 | Above 4G Decoding | ✅ Habilitado (senão use `npci=0x3000`) |
 | EHCI/XHCI Hand-off | ✅ Habilitado |
 | SATA Mode | AHCI |
-| VRAM | 512MB mínimo (use Smokeless-UMAF se não aparecer) |
+| VRAM (UMA Frame Buffer) | ✅ **2GB (2048MB)** via Smokeless-UMAF |
 
 ### Etapa 5: Instalar macOS
 
@@ -377,6 +410,43 @@ sudo diskutil mount disk0s1
 
 ---
 
+## ✅ Checklist de Validação Pós-Instalação (Recomendado)
+
+Após subir o macOS e copiar a EFI para o SSD interno, valide:
+
+1. **Boot frio** sem pendrive por pelo menos 3 reinicializações.
+2. **Wi-Fi/Bluetooth** estáveis por 30+ minutos (download contínuo + pareamento BT).
+3. **Áudio** (alto-falante + fone + microfone) com `alcid=21`.
+4. **Vídeo** sem artefatos em uso real (VSCode, navegador com vídeo, monitor externo se aplicável).
+5. **USB/NVMe** sem desconexões ou travas em cópia de arquivos grandes.
+6. **Trackpad/teclado** dentro da limitação esperada (modo básico para trackpad).
+
+Se qualquer item falhar, revise primeiro: BIOS/UMAF (VRAM 2GB), boot-args, estado das kexts e reset de NVRAM no OpenCore.
+
+---
+
+## 💻 Uso para Desenvolvimento (VSCode / Node.js / React Native)
+
+### Matriz de Viabilidade
+
+| Cenário | Status | Observações práticas |
+|---|---|---|
+| VSCode + Node.js + npm/yarn/pnpm | ✅ Excelente | Compilação e tooling muito rápidos no Ryzen 7 4800HS |
+| Build Android (APK/AAB via Gradle) | ✅ Excelente | Recomendado 16GB+ RAM |
+| Build iOS (Xcode) para dispositivo físico | ✅ Funciona | Assinatura e deploy em iPhone/iPad são viáveis |
+| Android Emulator | ⚠️ Parcial | Pode variar em desempenho/estabilidade por virtualização em AMD |
+| iOS Simulator | ⚠️ Parcial | Em Hackintosh AMD pode apresentar limitações; prefira iPhone físico |
+| Docker/containers | ⚠️ Parcial | Dependente de virtualização; valide seu fluxo antes de adotar em produção |
+
+### Boas práticas para trabalho diário
+
+1. Priorize **dispositivo físico** (Android/iOS) para testes de app.
+2. Evite updates de macOS no dia do lançamento; atualize primeiro OpenCore + kexts essenciais.
+3. Mantenha backup da EFI em pendrive e snapshot/backup do sistema antes de grandes mudanças.
+4. Documente toda alteração de BIOS, boot-args e kexts para rollback rápido.
+
+---
+
 ## 🔗 Referências e Recursos
 
 - [OpenCore Install Guide (Dortania)](https://dortania.github.io/OpenCore-Install-Guide/)
@@ -391,8 +461,6 @@ sudo diskutil mount disk0s1
 - [Smokeless-UMAF](https://github.com/DavidS95/Smokeless_UMAF)
 - [AMD OS X Discord](https://discord.gg/EfCYAJW)
 - [r/Hackintosh](https://www.reddit.com/r/hackintosh/)
-
----
 
 ## 📄 Licença
 
