@@ -11,25 +11,31 @@ echo.
 echo Selecione a versao do macOS:
 echo.
 echo  [1] macOS Ventura (13) - Estavel
-echo  [2] macOS Sonoma (14) - RECOMENDADO
-echo  [3] macOS Sequoia (15) - Mais recente
+echo  [2] macOS Sonoma (14) - Estavel (testado neste projeto)
+echo  [3] macOS Sequoia (15) - Recente
+echo  [4] macOS Tahoe (16) - Mais recente (requer kexts atualizados!)
 echo.
 
-set /p CHOICE="Escolha (1/2/3): "
+set /p CHOICE="Escolha (1/2/3/4): "
 
 cd /d "%~dp0\HackintoshEFI\macrecovery"
 
 if "%CHOICE%"=="1" (
     echo Baixando macOS Ventura...
-    py macrecovery.py -b Mac-4B682C642B45593E -m 00000000000000000 download
+    py macrecovery.py -b Mac-B4831CEBD52A0C4C -m 00000000000000000 download
 )
 if "%CHOICE%"=="2" (
     echo Baixando macOS Sonoma...
-    py macrecovery.py -b Mac-226CB3C6A851A671 -m 00000000000000000 download
+    py macrecovery.py -b Mac-827FAC58A8FDFA22 -m 00000000000000000 download
 )
 if "%CHOICE%"=="3" (
     echo Baixando macOS Sequoia...
-    py macrecovery.py -b Mac-937A206F2EE63C01 -m 00000000000000000 download
+    py macrecovery.py -b Mac-7BA5B2D9E42DDD94 -m 00000000000000000 download
+)
+if "%CHOICE%"=="4" (
+    echo Baixando macOS Tahoe...
+    echo AVISO: Verifique se NootedRed e itlwm suportam Tahoe antes de instalar!
+    py macrecovery.py -b Mac-CFF7D910A743CAAF -m 00000000000000000 -os latest download
 )
 
 echo.
