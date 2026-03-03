@@ -1,0 +1,57 @@
+# === macOS / Hackintosh ===
+.DS_Store
+._*
+.Spotlight-V100
+.Trashes
+__MACOSX/
+
+# === Python ===
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+*.egg
+
+# === Temporários ===
+*.zip
+*.dat
+*.dsl
+*.dmg
+*.log
+*.txt.bak
+
+# === ACPI Dumps ===
+SSDTTime-master/
+VoodooI2C_Extract/
+Airport_Kext/
+GUX-extract/
+tuf-a15-ref/
+
+# === Downloads de terceiros ===
+HackintoshEFI/_downloads/
+HackintoshEFI/com.apple.recovery.boot/
+HeliPort.dmg
+
+# === Backups de config ===
+*.backup
+*.backup-*
+*.bak
+*.bak-*
+*.bak.*
+
+# === NVRAM dumps ===
+efi_macos/NVRAM/
+efi_macos/opencore-*.txt
+
+# === Dados sensíveis (nunca commitar) ===
+# Se por algum motivo você editou o config.plist com seus seriais reais,
+# use o sanitize_smbios.py para limpar antes de commitar.
+
+# === IDE ===
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
