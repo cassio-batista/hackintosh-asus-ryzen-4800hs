@@ -133,7 +133,7 @@
 			<key>AllowRelocationBlock</key>
 			<false/>
 			<key>AvoidRuntimeDefrag</key>
-			<false/>
+			<true/>
 			<key>DevirtualiseMmio</key>
 			<true/>
 			<key>DisableSingleUser</key>
@@ -1870,7 +1870,7 @@
 			<key>SysReport</key>
 			<false/>
 			<key>Target</key>
-			<integer>67</integer>
+			<integer>3</integer>
 		</dict>
 		<key>Entries</key>
 		<array/>
@@ -1961,7 +1961,7 @@
 			<dict>
 				<key>AAPL,VirtualMachineType</key>
 				<data>
-				AQAAAA==
+				AQ==
 				</data>
 				<key>DefaultBackgroundColor</key>
 				<data>
@@ -1985,7 +1985,7 @@
 				Rg==
 				</data>
 				<key>boot-args</key>
-				<string>keepsyms=1 alcid=21 npci=0x3000 amfi_get_out_of_my_way=0x1 revblock=media revpatch=sbvmm,asset ipc_control_port_options=0 msgbuf=1048576 -NRedDPDelay -vi2c-force-polling -v debug=0x100</string>
+				<string>keepsyms=1 alcid=21 npci=0x3000 amfi_get_out_of_my_way=0x1 revblock=media revpatch=sbvmm,asset ipc_control_port_options=0 msgbuf=1048576 -NRedDPDelay -vi2c-force-polling agdpmod=pikera</string>
 				<key>csr-active-config</key>
 				<data>
 				/w8AAA==
