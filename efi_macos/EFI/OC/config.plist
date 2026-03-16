@@ -1911,10 +1911,6 @@
 				<integer>115200</integer>
 				<key>ClockRate</key>
 				<integer>1843200</integer>
-				<key>Init</key>
-				<false/>
-				<key>Override</key>
-				<false/>
 				<key>PciDeviceInfo</key>
 				<data>
 				/////w==
@@ -1925,8 +1921,6 @@
 				<integer>0</integer>
 				<key>RegisterStride</key>
 				<integer>1</integer>
-				<key>UseForConsole</key>
-				<false/>
 				<key>UseMmio</key>
 				<false/>
 			</dict>
@@ -1965,6 +1959,10 @@
 		<dict>
 			<key>4D1EDE05-38C7-4A6A-9CC6-4BCCA8B38C14</key>
 			<dict>
+				<key>AAPL,VirtualMachineType</key>
+				<data>
+				AQAAAA==
+				</data>
 				<key>DefaultBackgroundColor</key>
 				<data>
 				AAAAAA==
@@ -1987,7 +1985,7 @@
 				Rg==
 				</data>
 				<key>boot-args</key>
-				<string>keepsyms=1 alcid=21 npci=0x3000 amfi_get_out_of_my_way=0x1 revblock=media revpatch=sbvmm ipc_control_port_options=0 msgbuf=1048576 -NRedDPDelay -vi2c-force-polling -v debug=0x100</string>
+				<string>keepsyms=1 alcid=21 npci=0x3000 amfi_get_out_of_my_way=0x1 revblock=media revpatch=sbvmm,asset ipc_control_port_options=0 msgbuf=1048576 -NRedDPDelay -vi2c-force-polling -v debug=0x100</string>
 				<key>csr-active-config</key>
 				<data>
 				/w8AAA==
@@ -2004,6 +2002,7 @@
 		<dict>
 			<key>4D1EDE05-38C7-4A6A-9CC6-4BCCA8B38C14</key>
 			<array>
+				<string>AAPL,VirtualMachineType</string>
 				<string>DefaultBackgroundColor</string>
 				<string>UIScale</string>
 			</array>
@@ -2015,6 +2014,8 @@
 			<array>
 				<string>boot-args</string>
 				<string>csr-active-config</string>
+				<string>board-id</string>
+				<string>HW_BID</string>
 			</array>
 		</dict>
 		<key>LegacyOverwrite</key>
@@ -2049,7 +2050,7 @@
 			<key>SystemMemoryStatus</key>
 			<string>Auto</string>
 			<key>SystemProductName</key>
-			<string>MacBookPro18,3</string>
+			<string>MacPro7,1</string>
 			<key>SystemSerialNumber</key>
 			<string>XXXXXXXXXX</string>
 			<key>SystemUUID</key>
