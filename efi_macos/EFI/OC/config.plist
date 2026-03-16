@@ -1987,7 +1987,7 @@
 				Rg==
 				</data>
 				<key>boot-args</key>
-				<string>keepsyms=1 alcid=21 npci=0x3000 amfi_get_out_of_my_way=0x1 revblock=media ipc_control_port_options=0 msgbuf=1048576 -NRedDPDelay -vi2c-force-polling -v debug=0x100</string>
+				<string>keepsyms=1 alcid=21 npci=0x3000 amfi_get_out_of_my_way=0x1 revblock=media revpatch=sbvmm ipc_control_port_options=0 msgbuf=1048576 -NRedDPDelay -vi2c-force-polling -v debug=0x100</string>
 				<key>csr-active-config</key>
 				<data>
 				/w8AAA==
@@ -2049,7 +2049,7 @@
 			<key>SystemMemoryStatus</key>
 			<string>Auto</string>
 			<key>SystemProductName</key>
-			<string>MacBookPro16,3</string>
+			<string>MacBookPro18,3</string>
 			<key>SystemSerialNumber</key>
 			<string>XXXXXXXXXX</string>
 			<key>SystemUUID</key>
