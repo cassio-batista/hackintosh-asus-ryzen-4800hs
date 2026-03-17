@@ -10,9 +10,9 @@ echo =============================================
 echo.
 echo Selecione a versao do macOS:
 echo.
-echo  [1] macOS Ventura (13) - Estavel
-echo  [2] macOS Sonoma (14) - RECOMENDADO
-echo  [3] macOS Sequoia (15) - Mais recente
+echo  [1] macOS Ventura (13) - Legado
+echo  [2] macOS Sonoma (14) - Estavel (branch main)
+echo  [3] macOS Sequoia (15) - RECOMENDADO (branch upgrade/macos-sequoia)
 echo.
 
 set /p CHOICE="Escolha (1/2/3): "

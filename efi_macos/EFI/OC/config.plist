@@ -10,6 +10,8 @@
 	<string>In most cases recommended to use Sample.plist</string>
 	<key>#WARNING - 4</key>
 	<string>Use SampleCustom.plist only for special cases.</string>
+	<key>#macOS-target</key>
+	<string>macOS Sequoia 15.x — ASUS Vivobook AMD Ryzen 7 4800HS / Vega 7 — OpenCore 1.0.6</string>
 	<key>ACPI</key>
 	<dict>
 		<key>Add</key>
@@ -133,7 +135,7 @@
 			<key>AllowRelocationBlock</key>
 			<false/>
 			<key>AvoidRuntimeDefrag</key>
-			<false/>
+			<true/>
 			<key>DevirtualiseMmio</key>
 			<true/>
 			<key>DisableSingleUser</key>
@@ -145,7 +147,7 @@
 			<key>EnableSafeModeSlide</key>
 			<true/>
 			<key>EnableWriteUnprotector</key>
-			<true/>
+			<false/>
 			<key>ForceBooterSignature</key>
 			<false/>
 			<key>ForceExitBootServices</key>
@@ -423,7 +425,7 @@
 				<key>BundlePath</key>
 				<string>AirportItlwm.kext</string>
 				<key>Comment</key>
-				<string></string>
+				<string>Sonoma-only kext — nao compativel com Sequoia, usar itlwm</string>
 				<key>Enabled</key>
 				<false/>
 				<key>ExecutablePath</key>
@@ -1987,7 +1989,7 @@
 				Rg==
 				</data>
 				<key>boot-args</key>
-				<string>keepsyms=1 alcid=21 npci=0x3000 amfi_get_out_of_my_way=0x1 revblock=media ipc_control_port_options=0 msgbuf=1048576 -NRedDPDelay -vi2c-force-polling</string>
+				<string>keepsyms=1 alcid=21 npci=0x3000 amfi_get_out_of_my_way=0x1 ipc_control_port_options=0 msgbuf=1048576 -NRedDPDelay -vi2c-force-polling</string>
 				<key>csr-active-config</key>
 				<data>
 				/w8AAA==

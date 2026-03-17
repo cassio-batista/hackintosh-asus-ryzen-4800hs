@@ -57,7 +57,10 @@ if not drive:
 
 USB_ROOT = f"{drive}:\\"
 USB_EFI = os.path.join(USB_ROOT, "EFI")
-LOCAL_EFI = r"C:\Users\cassi\git\New folder\HackintoshEFI\EFI"
+
+# Fonte autoritativa: efi_macos/EFI (versionado no git, branch atual)
+SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+LOCAL_EFI = os.path.join(SCRIPT_DIR, "efi_macos", "EFI")
 
 print(f"\n  Pendrive detectado: {drive}:")
 print(f"  Origem:  {LOCAL_EFI}")
